@@ -23,7 +23,7 @@ import {readJsonFile} from './test-shared';
 // Unit test
 if (ONNX_JS_TEST_CONFIG.unittest) {
   // tslint:disable-next-line:no-require-imports
-  require('./unittests');
+  // require('./unittests');
 }
 
 // Set file cache

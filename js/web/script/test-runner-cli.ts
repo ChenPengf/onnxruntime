@@ -451,7 +451,7 @@ function run(config: Test.Config) {
     const browser = getBrowserNameFromEnv(args.env, args.debug);
     const karmaArgs = ['start', `--browsers ${browser}`];
     if (args.debug) {
-      karmaArgs.push('--log-level info');
+      karmaArgs.push('--log-level info --timeout-mocha 9999999');
     } else {
       karmaArgs.push('--single-run');
     }

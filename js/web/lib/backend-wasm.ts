@@ -1,13 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import {Backend, env, InferenceSession, SessionHandler} from 'onnxruntime-common';
+import {Backend, InferenceSession, SessionHandler} from 'onnxruntime-common';
 
-import {init, OnnxruntimeWebAssemblySessionHandler} from './wasm';
+import {initializeFlags} from './wasm/flags';
+import {OnnxruntimeWebAssemblySessionHandler} from './wasm/session-handler';
+import {initializeWebAssembly} from './wasm/wasm-factory';
 
 class OnnxruntimeWebAssemblyBackend implements Backend {
   async init(): Promise<void> {
-    await init();
+    // populate wasm flags
+    initializeFlags();
+
+    // init wasm
+    await initializeWebAssembly();
   }
   createSessionHandler(path: string, options?: InferenceSession.SessionOptions): Promise<SessionHandler>;
   createSessionHandler(buffer: Uint8Array, options?: InferenceSession.SessionOptions): Promise<SessionHandler>;
@@ -29,22 +35,3 @@ class OnnxruntimeWebAssemblyBackend implements Backend {
 }
 
 export const wasmBackend = new OnnxruntimeWebAssemblyBackend();
-
-export interface WebAssemblyFlags {
-  /**
-   * set or get number of worker(s)
-   *
-   * This setting is available only when WebAssembly multithread feature is available in current context.
-   */
-  worker?: number;
-
-  /**
-   * set or get a number specifying the timeout for initialization of WebAssembly backend, in milliseconds.
-   */
-  initTimeout?: number;
-}
-
-/**
- * Represent a set of flags for WebAssembly backend.
- */
-export const flags: WebAssemblyFlags = env.wasm = env.wasm as WebAssemblyFlags || {};

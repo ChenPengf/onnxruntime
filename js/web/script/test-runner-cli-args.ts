@@ -3,10 +3,8 @@
 
 import minimist from 'minimist';
 import npmlog from 'npmlog';
-import {InferenceSession} from 'onnxruntime-common';
+import {Env, InferenceSession} from 'onnxruntime-common';
 
-import {WebGLFlags} from '../lib/backend-onnxjs';
-import {WebAssemblyFlags} from '../lib/backend-wasm';
 import {Logger} from '../lib/onnxjs/instrument';
 import {Test} from '../test/test-types';
 
@@ -151,9 +149,9 @@ export interface TestRunnerCliArgs {
   cudaOptions?: InferenceSession.CudaExecutionProviderOption;
   cudaFlags?: Record<string, unknown>;
   wasmOptions?: InferenceSession.WebAssemblyExecutionProviderOption;
-  wasmFlags?: WebAssemblyFlags;
+  wasmFlags?: Env.WebAssemblyFlags;
   webglOptions?: InferenceSession.WebGLExecutionProviderOption;
-  webglFlags?: WebGLFlags;
+  webglFlags?: Env.WebGLFlags;
 
   noSandbox?: boolean;
 }
@@ -246,7 +244,7 @@ function parseWasmOptions(_args: minimist.ParsedArgs): InferenceSession.WebAssem
   return {name: 'wasm'};
 }
 
-function parseWasmFlags(args: minimist.ParsedArgs): WebAssemblyFlags {
+function parseWasmFlags(args: minimist.ParsedArgs): Env.WebAssemblyFlags {
   const worker = args['wasm-worker'];
   if (typeof worker !== 'undefined' && typeof worker !== 'number') {
     throw new Error('Flag "wasm-worker" must be a number value');
@@ -262,7 +260,7 @@ function parseWebglOptions(_args: minimist.ParsedArgs): InferenceSession.WebGLEx
   return {name: 'webgl'};
 }
 
-function parseWebglFlags(args: minimist.ParsedArgs): WebGLFlags {
+function parseWebglFlags(args: minimist.ParsedArgs): Env.WebGLFlags {
   const contextId = args['webgl-context-id'];
   if (contextId !== undefined && contextId !== 'webgl' && contextId !== 'webgl2') {
     throw new Error('Flag "webgl-context-id" is invalid');

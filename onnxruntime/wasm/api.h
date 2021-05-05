@@ -25,7 +25,7 @@ extern "C" {
 /**
  * perform global initialization. should be called only once.
  */
-void EMSCRIPTEN_KEEPALIVE OrtInit();
+void EMSCRIPTEN_KEEPALIVE OrtInit(int numThreads, int logging_level);
 
 /**
  * create an instance of ORT session.

@@ -102,6 +102,8 @@ function buildTestRunnerConfig({
     externals: {
       'onnxruntime-common': 'ort',
       'fs': 'fs',
+      'perf_hooks': 'perf_hooks',
+      'worker_threads': 'worker_threads',
     },
     resolve: { extensions: ['.ts', '.js'], aliasFields: [] },
     plugins: [

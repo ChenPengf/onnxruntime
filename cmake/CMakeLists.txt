@@ -278,6 +278,11 @@ if (onnxruntime_BUILD_WEBASSEMBLY)
     string(APPEND CMAKE_CXX_FLAGS " -flto")
   endif()
 
+  ###
+  ### TESTING
+  ###
+  # string(APPEND CMAKE_CXX_FLAGS " -fsanitize=address")
+
   if (onnxruntime_ENABLE_WEBASSEMBLY_SOURCEMAP)
     # Build with sourcemap support
     set(CMAKE_CXX_FLAGS_DEBUG "-g4 --source-map-base ${onnxruntime_WEBASSEMBLY_SOURCEMAP_BASE}")
